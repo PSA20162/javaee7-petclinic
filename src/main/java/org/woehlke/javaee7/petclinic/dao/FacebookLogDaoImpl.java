@@ -5,6 +5,8 @@ import org.woehlke.javaee7.petclinic.entities.FacebookLog;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,7 +22,8 @@ public class FacebookLogDaoImpl implements FacebookDao {
     @Override
     public List<FacebookLog> getAll() {
         TypedQuery<FacebookLog> q = entityManager.createQuery("select o from FacebookLog o order by o.name", FacebookLog.class);
-        List<FacebookLog> list =  q.getResultList();
+        List<FacebookLog> list = q.getResultList();
+        Collections.reverse(list);
         return list;
     }
 
