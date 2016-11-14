@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="./template.xhtml"
                     xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:c="http://java.sun.com/jstl/core"
                     xmlns:h="http://java.sun.com/jsf/html"
                     xmlns:f="http://java.sun.com/jsf/core"
                     xmlns:ui="http://java.sun.com/jsf/facelets"
                     xmlns:a4j="http://richfaces.org/a4j"
                     xmlns:rich="http://richfaces.org/rich">>
-
         <ui:define name="content">
+            <c:if test="#{not facebookSession.logged}">
+                <a href="signin"><img src="./assets/login-with-facebook.png" alt="Sign in with Facebook" /></a>
+                <hr />
+            </c:if>
+            <c:if test="#{facebookSession.logged}">
+                <h1>Welcome ${facebookSession.name} </h1>
+                <hr />
+
+                <a href="./logout">logout</a>
+            </c:if>
             <h1>#{msg.welcome}</h1>
             <h4>#{msg.welcome_a}</h4>
             <ul>
