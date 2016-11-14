@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class LogoutServlet extends HttpServlet {
     private static final long serialVersionUID = 5357658337449255998L;
+    private static Logger log = Logger.getLogger(LogoutServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {      
@@ -32,6 +34,6 @@ public class LogoutServlet extends HttpServlet {
         StringBuffer next = request.getRequestURL();
         int index = next.lastIndexOf("/");
         next.replace(index+1, next.length(), "");
-        response.sendRedirect("http://www.facebook.com/logout.php?next=" + next.toString() + "&access_token=" + accessToken);
+        response.sendRedirect(next.toString());
     }
 }

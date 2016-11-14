@@ -40,12 +40,10 @@ public class CallbackServlet extends HttpServlet {
     private void saveLogin(Facebook facebook) throws FacebookException {
         log.info("SAVING LOG");
         User user = facebook.getMe(new Reading().fields("name", "email", "hometown"));
-        log.info(user.toString().replace(",", "\n"));
         FacebookLog facebookLog = new FacebookLog();
         facebookLog.setName(user.getName());
         facebookLog.setEmail(user.getEmail() != null ? user.getEmail() : "no email");
         facebookLog.setDate(new Date());
-//        facebookLog.setId(user.getId());
         facebookDao.addNew(facebookLog);
 
     }

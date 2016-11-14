@@ -28,8 +28,6 @@ public class FacebookBean implements Serializable {
 
         Facebook facebook = (Facebook) faceSession;
 
-        log.info(facebook.toString());
-
         return (facebook != null);
 
     }
@@ -42,10 +40,6 @@ public class FacebookBean implements Serializable {
         }
 
         Facebook facebook = (Facebook) faceSession;
-    log.info("\n\n\n\n\n");
-        log.info(facebook.toString());
-        log.info("\n\n\n\n\n");
-
 
         if (facebook == null) {
             return "";
