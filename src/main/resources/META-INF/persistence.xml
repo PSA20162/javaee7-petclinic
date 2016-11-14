@@ -12,6 +12,7 @@
         <class>org.woehlke.javaee7.petclinic.entities.Specialty</class>
         <class>org.woehlke.javaee7.petclinic.entities.Vet</class>
         <class>org.woehlke.javaee7.petclinic.entities.Visit</class>
+        <class>org.woehlke.javaee7.petclinic.entities.FacebookLog</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="jpa.showSql" value="true"/>
