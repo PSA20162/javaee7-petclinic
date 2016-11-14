@@ -1,5 +1,9 @@
 package org.woehlke.javaee7.petclinic.web;
 
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.Reading;
+import facebook4j.User;
 import org.woehlke.javaee7.petclinic.dao.OwnerDao;
 import org.woehlke.javaee7.petclinic.dao.PetDao;
 import org.woehlke.javaee7.petclinic.dao.PetTypeDao;
@@ -13,6 +17,7 @@ import org.woehlke.javaee7.petclinic.services.OwnerService;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -128,6 +133,28 @@ public class OwnerController implements Serializable {
         ownerDao.addNew(this.owner);
         this.ownerList = ownerDao.getAll();
         return "owners.jsf";
+    }
+
+    public void saveNewOwnerWithFacebook(){
+        Object faceSession = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("facebook");
+
+        if (faceSession == null) {
+            return;
+        }
+        Facebook facebook = (Facebook) faceSession;
+        User user;
+        try {
+            user = facebook.getMe(new Reading().fields("name", "email", "hometown", "first_name", "last_name"));
+        } catch (FacebookException e) {
+            e.printStackTrace();
+            return;
+        }
+
+
+        this.owner.setFirstName(user.getFirstName());
+        this.owner.setLastName(user.getLastName());
+        this.owner.setCity("Porto Alegre");
+        return;
     }
 
     public String showOwner(long id){
