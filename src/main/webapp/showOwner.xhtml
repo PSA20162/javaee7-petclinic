@@ -33,7 +33,7 @@
                     <h:commandButton id="addPet" value="#{msg.addNewPet}" style="float: right"
                                      action="#{ownerController.getAddNewPetForm()}" styleClass="btn"/>
                 </h:panelGrid>
-                <h2>#{msg.petsAndVisits}</h2>
+                <h2>Pets's Medical Visits and Hotel CheckIns</h2>
                 <h:dataTable id="petsAndVisitsTable" value="#{ownerController.owner.pets}" var="ownersPet" styleClass="table">
                     <h:column>
                         <dl class="dl-horizontal" style="float: left">
@@ -70,9 +70,47 @@
                                     <h:commandLink id="addVisit" action="#{ownerController.addVisitToPetForm(ownersPet.id)}" >#{msg.addVisit}</h:commandLink>
                                 </f:facet>
                             </h:column>
+                             
+                        </h:dataTable>
+                        <h:dataTable id="checkInTable" value="#{ownersPet.checkin}" var="checkin"
+                                     styleClass="table-condensed table" style="float: right">
+                            
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Check in date"/>
+                                </f:facet>
+                                <h:outputText id="date" value="#{checkin.date}">
+                                    <f:convertDateTime type="date" dateStyle="medium"/>
+                                </h:outputText>
+                                <f:facet name="footer">
+                                    <h:commandLink id="editPet" action="#{ownerController.editPetForm(ownersPet.id)}" >#{msg.editPet}</h:commandLink>
+                                </f:facet>
+                            </h:column>
+                            
+                            
+                             <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Check out date"/>
+                                </f:facet>
+                                <h:outputText id="dateFinal" value="#{checkin.dateFinal}">
+                                    <f:convertDateTime type="date" dateStyle="medium"/>
+                                </h:outputText>
+                              
+                            </h:column>
+                        
+                             <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{msg.description}"/>
+                                </f:facet>
+                                <h:outputText id="description2" value="#{checkin.description}"/>
+                                <f:facet name="footer">
+                                    <h:commandLink id="addCheckIn" action="#{ownerController.addCheckInToPetForm(ownersPet.id)}" >Add Check In</h:commandLink>
+                                </f:facet>
+                            </h:column>
                         </h:dataTable>
                     </h:column>
                 </h:dataTable>
+                
             </h:form>
         </ui:define>
 

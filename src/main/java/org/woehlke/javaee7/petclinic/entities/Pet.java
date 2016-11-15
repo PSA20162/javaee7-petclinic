@@ -45,8 +45,29 @@ public class Pet implements Comparable<Pet> {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
     private Set<Visit> visits = new HashSet<Visit>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+    private Set<CheckIn> checkin = new HashSet<CheckIn>();
+
+    public List<CheckIn> getCheckin() {
+         List<CheckIn> list = new ArrayList<>();
+        for(CheckIn visit:checkin){
+            list.add(visit);
+        }
+        Collections.sort(list);
+        return list;
+    }
+
+    public void setCheckin(Set<CheckIn> checkin) {
+        this.checkin = checkin;
+    }
+    
+      
     public void addVisit(Visit visit) {
         visits.add(visit);
+    }
+    
+     public void addCheckIn(CheckIn checkIn) {
+        checkin.add(checkIn);
     }
 
     public Long getId() {
@@ -98,6 +119,9 @@ public class Pet implements Comparable<Pet> {
         Collections.sort(list);
         return list;
     }
+    
+    
+    
 
     public void setVisits(Set<Visit> visits) {
         this.visits = visits;

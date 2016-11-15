@@ -8,7 +8,9 @@ import org.woehlke.javaee7.petclinic.entities.Owner;
 import org.woehlke.javaee7.petclinic.entities.Pet;
 import org.woehlke.javaee7.petclinic.entities.PetType;
 import org.woehlke.javaee7.petclinic.entities.Visit;
+import org.woehlke.javaee7.petclinic.entities.CheckIn;
 import org.woehlke.javaee7.petclinic.services.OwnerService;
+
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +18,8 @@ import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import org.woehlke.javaee7.petclinic.dao.VisitHotelDao;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +45,9 @@ public class OwnerController implements Serializable {
 
     @EJB
     private VisitDao visitDao;
+    
+    @EJB
+    private VisitHotelDao visitHotelDao;
 
     @EJB
     private OwnerService ownerService;
@@ -56,11 +63,19 @@ public class OwnerController implements Serializable {
     private long petTypeId;
 
     private Visit visit;
+    
+    private CheckIn checkin;
+    
     private int scrollerPage;
+
+   
+  
+   
 
     public Visit getVisit() {
         return visit;
     }
+
 
     public void setVisit(Visit visit) {
         this.visit = visit;
@@ -190,11 +205,29 @@ public class OwnerController implements Serializable {
         this.visit = new Visit();
         return "addVisitToPet.jsf";
     }
+    
+    public String addCheckInToPetForm(long petId){
+        this.pet = petDao.findById(petId);
+        this.petTypeId = this.pet.getType().getId();
+        this.checkin = new CheckIn();
+        return "addVisitHotel.jsf";
+    }
 
     public String saveVisit(){
         this.visit.setPet(this.pet);
         this.pet.addVisit(this.visit);
         ownerService.addNewVisit(this.visit);
+        log.info("owner1: " + this.owner.toString());
+        long ownerId = this.owner.getId();
+        this.owner = this.ownerDao.findById(ownerId);
+        log.info("owner2: "+this.owner.toString());
+        return "showOwner.jsf";
+    }
+    
+     public String saveCheckIn(){
+        this.checkin.setPet(this.pet);
+        this.pet.addCheckIn(this.checkin);
+        ownerService.addCheckIn(this.checkin);
         log.info("owner1: " + this.owner.toString());
         long ownerId = this.owner.getId();
         this.owner = this.ownerDao.findById(ownerId);
@@ -209,4 +242,16 @@ public class OwnerController implements Serializable {
     public int getScrollerPage() {
         return scrollerPage;
     }
+
+    public CheckIn getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(CheckIn checkin) {
+        this.checkin = checkin;
+    }
+    
+    
+    
+    
 }
